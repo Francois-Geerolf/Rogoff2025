@@ -1,11 +1,15 @@
 rm(list = ls())
 setwd(here::here())
+min_year <- 2021
+max_year <- 2023
+
 library(tidyverse)
 library(readxl)
 library(eurostat)
 library(scales)
 library(ggpubr)
 library(eurostat)
+library(viridis)
 
 load("colors.RData")
 load("geo.RData")
@@ -29,8 +33,8 @@ plot1 <- nrg_pc_204 %>%
   filter(geo %in% c("FR", "DE", "EA", "ES", "IT"),
          nrg_cons == "KWH_LT1000",
          currency == "EUR",
-         as.numeric(substr(time, 1, 4)) >= 2021,
-         as.numeric(substr(time, 1, 4)) <= 2024) %>%
+         as.numeric(substr(time, 1, 4)) >= min_year,
+         as.numeric(substr(time, 1, 4)) <= max_year) %>%
   select_if(~n_distinct(.) > 1) %>%
   left_join(geo, by = "geo") %>%
   mutate(Geo = ifelse(geo == "EA", "Euro Area", Geo)) %>%
@@ -61,8 +65,8 @@ plot2 <- nrg_pc_204 %>%
   filter(geo %in% c("FR", "DE", "EA", "ES", "IT"),
          nrg_cons == "KWH_GE15000",
          currency == "EUR",
-         as.numeric(substr(time, 1, 4)) >= 2021,
-         as.numeric(substr(time, 1, 4)) <= 2024) %>%
+         as.numeric(substr(time, 1, 4)) >= min_year,
+         as.numeric(substr(time, 1, 4)) <= max_year) %>%
   select_if(~n_distinct(.) > 1) %>%
   left_join(geo, by = "geo") %>%
   mutate(Geo = ifelse(geo == "EA", "Euro Area", Geo)) %>%

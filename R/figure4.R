@@ -6,6 +6,7 @@ library(eurostat)
 library(scales)
 library(ggpubr)
 library(eurostat)
+library(viridis)
 
 load("colors.RData")
 load("geo.RData")
